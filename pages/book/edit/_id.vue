@@ -88,8 +88,15 @@ export default defineComponent({
       // ローカルストレージに存在していれば取り出す
       if (localStorage.getItem(STORAGE_KEY)) {
         book.value = JSON.parse(String(localStorage.getItem(STORAGE_KEY)))[id]
+        // 呼んだ日付を既に保存していた場合
+        if (book.value.readDate !== '') {
+          date.value = book.value.readDate
+        }
       }
     })
+    /**
+     * 
+     */
     const updateBookInfo = () => {
       context.emit('update-book-info', {
         id,

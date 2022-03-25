@@ -5,6 +5,7 @@
       :books="books"
       @add-book-list="addBook"
       @update-book-info="updateBookInfo"
+      @delete-local-storage="deleteLocalStorage"
     />
   </div>
 </template>
@@ -46,7 +47,10 @@ export default defineComponent({
     })
 
     const router = useRouter()
-    // ローカルストレージに保存する本の配列
+
+    /**
+     * search画面から保存したときの処理.
+     */
     const addBook = (e: Book) => {
       books.value.push({
         id: books.value.length,
@@ -63,6 +67,10 @@ export default defineComponent({
       const id = books.value.length - 1
       router.push(`edit/${id}`)
     }
+
+    /**
+     * edit画面から保存するを押したときの処理.
+     */
     const updateBookInfo = (e: Books) => {
       // 渡されてきた本の情報をBooksの配列に置き換える
       books.value.splice(e.id, 1, e)
@@ -71,7 +79,18 @@ export default defineComponent({
       localStorage.setItem(STORAGE_KEY, parsed)
       router.push('/book')
     }
-    return { books, addBook, updateBookInfo }
+    /**
+     * 全件削除(book/index.vueから受け取る).
+     */
+    const deleteLocalStorage = () => {
+      const isDeleted = '本当に削除してよろしいですか'
+      if (window.confirm(isDeleted)) {
+        localStorage.removeItem('books')
+        window.location.reload()
+      }
+    }
+
+    return { books, addBook, updateBookInfo, deleteLocalStorage }
   },
 })
 </script>
