@@ -101,7 +101,7 @@ export default defineComponent({
       context.emit('update-book-info', {
         id,
         readDate: date.value,
-        mamo: book.value.memo,
+        memo: book.value.memo,
         title: book.value.title,
         image: book.value.image,
         description: book.value.description,
