@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, inject } from '@nuxtjs/composition-api'
 import { addDoc, collection, getFirestore } from 'firebase/firestore'
 export default defineComponent({
@@ -12,7 +12,7 @@ export default defineComponent({
     const addData = async () => {
       try {
         // pluginからfirebase 取得
-        const firebase = inject('firebase')
+        const firebase:any = inject('firebase')
         // firestoreを使う
         const db = getFirestore(firebase)
         const res = await addDoc(collection(db, 'tasks'), {
